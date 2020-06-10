@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="dashboard-editor-container">
+    <github-corner class="github-corner" />
     <!-- Form -->
     <el-button type="primary" @click="dialogFormVisible = true">打开上传 Dialog</el-button>
 
@@ -31,6 +32,7 @@
     <el-dialog title="商品图片" :visible.sync="dialogImgVisible">
         <el-image style="width: 100px; height: 100px" :src="url" :preview-src-list="srcList"></el-image>
     </el-dialog>
+    <!-- echarts-->
 
   </div>
 </template>
@@ -62,3 +64,11 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.dashboard-editor-container {
+  padding: 32px;
+  background-color: rgb(240, 242, 245);
+  position: relative;
+
+}
+</style>

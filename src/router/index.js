@@ -178,7 +178,34 @@ export const asyncRoutes = [
       }
     ]
   },
-
+  {
+    path: '/echarts',
+    component: Layout,
+    meta: {
+      title: 'Echarts',
+      icon: 'table',
+    },
+    children: [
+      {
+        path: 'PieChart',
+        name: 'PieChart',
+        component: () => import('@/views/echarts/PieChart'),
+        meta: { title: 'PieChart', icon: 'table' }
+      },
+      {
+        path: 'BarChart',
+        name: 'BarChart',
+        component: () => import('@/views/echarts/BarChart'),
+        meta: { title: 'BarChart', icon: 'table' }
+      },
+      {
+        path: 'LineChart',
+        name: 'LineChart',
+        component: () => import('@/views/echarts/LineChart'),
+        meta: { title: 'LineChart', icon: 'table' }
+      },
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
