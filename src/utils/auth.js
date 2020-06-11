@@ -11,7 +11,7 @@ export function getToken() {
  *  那么就需要 修改 removeToken(store/module/user.js),查看哪里删除了toekn
  */
 export function setToken(token) {
-  // return Cookies.set(TokenKey, token)
+  // return Cookies.set(TokenKey, token)//默认关闭浏览器过期
   return Cookies.set(TokenKey, token, { expires: 7 })
 }
 
