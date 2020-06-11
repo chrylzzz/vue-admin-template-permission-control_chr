@@ -206,6 +206,18 @@ export const asyncRoutes = [
       },
     ]
   },
+  {
+    path: '/goodstable',
+    component: Layout,
+    children: [
+      {
+        path: 'goodstable',
+        name: 'GoodsTable',
+        component: () => import('@/views/goodstable/index'),
+        meta: { title: 'GoodsTable', icon: 'table' }
+      },
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
