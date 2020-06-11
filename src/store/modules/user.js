@@ -91,6 +91,7 @@ const actions = {
     })
   },
 
+  //如果不需要浏览器退出或者服务端关闭就删除cookie,那么就注释该removeToken
   // remove token
   resetToken({ commit }) {
     return new Promise(resolve => {
