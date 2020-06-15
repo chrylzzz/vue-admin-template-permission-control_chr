@@ -109,7 +109,6 @@ export default {
   }
 };
 </script>
-</script>
 <style lang="scss" scoped>
 .dashboard-editor-container {
   padding: 32px;

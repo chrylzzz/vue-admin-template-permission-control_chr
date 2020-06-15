@@ -204,6 +204,25 @@ export const asyncRoutes = [
         component: () => import('@/views/echarts/LineChart'),
         meta: { title: 'LineChart', icon: 'table' }
       },
+      // 绚丽
+      {
+        path: 'Keyboard',
+        name: 'Keyboard',
+        component: () => import('@/views/echarts/Keyboard'),
+        meta: { title: 'Keyboard', icon: 'table' }
+      },
+      {
+        path: 'LineMarker',
+        name: 'LineMarker',
+        component: () => import('@/views/echarts/LineMarker'),
+        meta: { title: 'LineMarker', icon: 'table' }
+      },
+      {
+        path: 'MixChart',
+        name: 'MixChart',
+        component: () => import('@/views/echarts/MixChart'),
+        meta: { title: 'MixChart', icon: 'table' }
+      },
     ]
   },
   {
