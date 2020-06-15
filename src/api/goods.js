@@ -22,11 +22,28 @@ export function createData(data) {
     data
   })
 }
+//data为参数
 export function updateData(data) {
   return request({
     url: '/goods/update',
     method: 'post',
     data
+  })
+}
+
+//修改商品的发布状态
+export function changeGoodsStatus(data){
+  return request({
+    url: '/goods/changeGoodsStatus',
+    method: 'post',
+    data
+  })
+}
+//删除
+export function deleteGoods(id){
+  return request({
+    url: '/goods/deleteGoods/'+id,
+    method: 'delete',
   })
 }
 

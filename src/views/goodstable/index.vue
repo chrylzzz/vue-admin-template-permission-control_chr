@@ -9,7 +9,7 @@
         <el-button type="warning" icon="el-icon-star-off" circle></el-button>
         <el-button type="danger" icon="el-icon-delete" circle></el-button>-->
         <!-- 条件查询区域 -->
-        <div class="filter-container">
+        <div class="table-operator">
           <el-input
             v-model="listQuery.goodsName"
             placeholder="商品名称"
@@ -56,6 +56,13 @@
               :value="item.key"
             />
           </el-select>-->
+          <!-- 日期 选择 -->
+          <el-date-picker
+            v-model="listQuery.releaseDate"
+            type="date"
+            format="yyyy-MM-dd"
+            placeholder="请选择时间"
+          />
           <el-button
             v-waves
             class="filter-item"
@@ -70,6 +77,13 @@
             icon="el-icon-edit"
             @click="handleCreate"
           >添加</el-button>
+          <el-button
+            class="filter-item"
+            style="margin-left: 10px;"
+            type="success"
+            icon="el-icon-refresh"
+            @click="resetListQuery"
+          >重置</el-button>
         </div>
         <!-- 查询 end -->
         <!-- 添加 
@@ -108,10 +122,20 @@
             </el-form-item>
             <el-form-item label="生产时间" prop="releaseDate">
               <!--
+                时间格式:
                 type="datetime"
                 type="date"
+                选择格式:
+                format="yyyy-MM-dd"
+                会变为string类型,与rules规则冲突
+                value-format="yyyy-MM-dd"
               -->
-              <el-date-picker v-model="temp.releaseDate" type="date" placeholder="请选择上线时间" />
+              <el-date-picker
+                v-model="temp.releaseDate"
+                type="date"
+                format="yyyy-MM-dd"
+                placeholder="请选择上线时间"
+              />
             </el-form-item>
             <el-form-item label="产品名称" prop="goodsName">
               <el-input v-model="temp.goodsName" />
@@ -120,7 +144,7 @@
               <el-input-number v-model="temp.goodsPrice" :precision="2" :step="100"></el-input-number>
             </el-form-item>
             <el-form-item label="产品状态">
-              <el-select v-model="temp.goodsStatus" class="filter-item" placeholder="Please select">
+              <el-select v-model="temp.goodsStatus" class="filter-item" placeholder="请选择...">
                 <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
               </el-select>
             </el-form-item>
@@ -140,7 +164,7 @@
                 v-model="temp.goodsDesc"
                 :autosize="{ minRows: 2, maxRows: 4}"
                 type="textarea"
-                placeholder="Please input"
+                placeholder="请输入....."
               />
             </el-form-item>
           </el-form>
@@ -163,35 +187,54 @@
         @current-change="handleCurrentChange"
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column fixed prop="releaseDate" label="日期" width="150" align="center"></el-table-column>
-        <el-table-column prop="goodsName" label="产品名称" width="120" align="center"></el-table-column>
-        <el-table-column prop="goodsColor" label="颜色" width="120" align="center"></el-table-column>
-        <el-table-column prop="goodsPrice" label="价格" width="120" align="center"></el-table-column>
-        <el-table-column prop="goodsStatus" label="是否启用" width="120" align="center"></el-table-column>
-        <el-table-column prop="goodsImp" label="星级" width="120" align="center"></el-table-column>
-        <!-- 这里不是用 123代表的星级 -->
-        <!-- <el-table-column label="星级" width="80px">
+        <el-table-column fixed prop="releaseDate" label="日期" width="120" align="center"></el-table-column>
+        <el-table-column prop="goodsName" label="产品名称" width="100" align="center"></el-table-column>
+        <el-table-column prop="goodsType" label="品牌" width="100" align="center"></el-table-column>
+        <el-table-column prop="goodsColor" label="颜色" width="100" align="center"></el-table-column>
+        <el-table-column prop="goodsPrice" label="价格" width="100" align="center"></el-table-column>
+        <el-table-column prop="goodsStatus" label="是否启用" width="100" align="center"></el-table-column>
+        <el-table-column prop="goodsStatus" label="是否启用" width="100" align="center">
+          <!-- 使用 switch 来控制开关 ,使用 template 得到这一行row属性,进行取值和传值 -->
           <template slot-scope="{row}">
-            <svg-icon
-              v-for="n in + row.goodsImp"
-              :key="n"
+            <el-switch
+              v-model="row.goodsStatus"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              active-value="published"
+              inactive-value="shelves"
+              @change="switchChangeByGoodsStatus(row)"
+            ></el-switch>
+          </template>
+        </el-table-column>
+        <el-table-column prop="goodsStatus" label="是否启用" width="100" align="center">
+          <!-- 判断使用 标签显示 -->
+          <template slot-scope="{row}">
+            <el-tag
+              :type="row.goodsStatus === 'published' ? 'success' : 'danger'"
+              disable-transitions
+            >{{row.goodsStatus}}</el-tag>
+          </template>
+        </el-table-column>
+        <!-- <el-table-column prop="goodsImp" label="星级" width="120" align="center"></el-table-column> -->
+        <el-table-column label="星级" width="100px">
+          <!--  直接用disable禁用可编辑 -->
+          <template slot-scope="{row}">
+            <el-rate
+              v-model="row.goodsImp"
               icon-class="star"
-              class="meta-item__icon"
+              :max="3"
+              style="margin-top:8px;"
+              disabled
             />
           </template>
-        </el-table-column> -->
-
-        <el-table-column prop="goodsId" label="编号" width="240" align="center"></el-table-column>
+        </el-table-column>
+        <el-table-column prop="goodsDesc" label="描述" width="150" align="center"></el-table-column>
+        <el-table-column prop="goodsId" label="编号" width="50" align="center"></el-table-column>
         <el-table-column prop="#" label="操作" width="200" align="center">
           <!-- 这里暴露 row -->
           <template slot-scope="{row}">
             <el-button type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
-            <el-button
-              v-if="row.status!='deleted'"
-              size="mini"
-              type="danger"
-              @click="handleModifyStatus(row,'deleted')"
-            >删除</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -212,9 +255,12 @@ import {
   goodsList,
   queryConditions,
   createData,
-  updateData
+  updateData,
+  changeGoodsStatus,
+  deleteGoods
 } from "@/api/goods"; //暴露 js api
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import service from "../../utils/request";
 
 //如果在这里 定义了数据,那么在下方只需要 calendarTypeOptions 即可, 而没在这里定义的需要 calendarTypeOptions:[],注明数据类型
 // const calendarTypeOptions = [
@@ -229,6 +275,7 @@ export default {
   directives: { waves }, // 引入指令
   data() {
     return {
+      vvv: 3,
       tableData: [], //表单数据
       multipleSelection: [],
       currentRow: null,
@@ -241,7 +288,8 @@ export default {
         //条件查询的参数
         goodsName: undefined,
         goodsColor: undefined,
-        goodsType: undefined
+        goodsType: undefined,
+        releaseDate: undefined
         // sort: "+id" //排序
       },
       //手机颜色,直接使用v-for
@@ -257,7 +305,6 @@ export default {
         create: "添加"
       },
       statusOptions: ["published", "shelves"], //产品状态
-      // switchStatus: "",//开关的产品状态
       //表单验证规则
       rules: {
         goodsType: [
@@ -302,6 +349,9 @@ export default {
       this.currentRow = val;
     },
     getList() {
+      if (this.listQuery.releaseDate) {
+        this.listQuery.releaseDate = new Date(this.listQuery.releaseDate);
+      }
       goodsList(this.listQuery).then(response => {
         this.tableData = response.data.data; //表格数据
         this.total = response.data.count; //条数
@@ -344,6 +394,18 @@ export default {
         goodsPrice: ""
       };
     },
+    resetListQuery() {
+      //查询条件重置
+      this.listQuery = {
+        page: 1,
+        limit: 10,
+        goodsName: undefined,
+        goodsColor: undefined,
+        goodsType: undefined,
+        releaseDate: undefined
+      };
+      this.getList();
+    },
     createData() {
       //创建
       this.$refs["dataForm"].validate(valid => {
@@ -382,9 +444,9 @@ export default {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp);
-          // tempData.releaseDate = +new Date(tempData.releaseDate); // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          tempData.releaseDate = new Date(tempData.releaseDate); // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           updateData(tempData).then(res => {
-            debugger;
+            // debugger;
             // ?????????
             // for (const v of this.list) {
             //   if (v.id === this.temp.id) {
@@ -407,7 +469,34 @@ export default {
           });
         }
       });
-    }
+    },
+    switchChangeByGoodsStatus(row) {
+      // debugger;
+      // this.temp = Object.assign({}, row); // copy obj ,
+      // const tempData = Object.assign({}, this.temp);
+      // changeGoodsStatus(tempData).then(res => {
+      changeGoodsStatus(row).then(res => {
+        console.log(res);
+        this.$notify({
+          title: "提示",
+          message: "修改成功 ~ ",
+          type: "success",
+          duration: 2000
+        });
+      });
+    },
+    handleDelete(row) {
+      deleteGoods(row.goodsId).then(res => {
+        // debugger;
+        this.$notify({
+          title: "提示",
+          message: "删除成功 ~ ",
+          type: "success",
+          duration: 2000
+        });
+        this.getList(); //刷新数据表
+      });
+    },
   }
 };
 </script>
@@ -416,5 +505,8 @@ export default {
   padding: 32px;
   background-color: rgb(240, 242, 245);
   position: relative;
+}
+.table-operator {
+  margin-bottom: 8px;
 }
 </style>
