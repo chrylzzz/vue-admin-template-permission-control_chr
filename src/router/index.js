@@ -245,6 +245,12 @@ export const asyncRoutes = [
         component: () => import('@/views/goodstable/inline-edit-table'),
         meta: { title: '行内编辑table', icon: 'table' }
       },
+      {
+        path: 'othstyle',
+        name: 'othstyle',
+        component: () => import('@/views/goodstable/othstyle'),
+        meta: { title: '其他样式table', icon: 'table' }
+      },
     ]
   },
   // 404 page must be placed at the end !!!

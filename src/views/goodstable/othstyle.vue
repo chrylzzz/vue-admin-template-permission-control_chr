@@ -27,6 +27,19 @@
             <!-- 写死下拉菜单 -->
             <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
           </el-select>
+          <!-- 多选框 : 双向绑定的数据应该是 [] ,注意这里后端接收非json格式一致不成功,以后建议由多选框的查询,直接使用json接收 -->
+          <el-select
+            v-model="listQuery.goodsColors"
+            multiple
+            placeholder="颜色样式2"
+            clearable
+            style="width: 90px"
+            class="filter-item"
+          >
+            <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
+          </el-select>
+
+
           <!-- 查询返回的下拉菜单 :filterable 可搜索 -->
           <el-select
             v-model="listQuery.goodsType"
@@ -44,7 +57,25 @@
               :value="item.key"
             />
           </el-select>
-
+          <el-select
+            v-model="listQuery.goodsType"
+            filterable
+            placeholder="品牌样式2"
+            clearable
+            class="filter-item"
+            style="width: 130px"
+          >
+            <!--  label:展示内容 -->
+            <el-option
+              v-for="item in calendarTypeOptions"
+              :key="item.key"
+              :label="item.display_name"
+              :value="item.key"
+            >
+              <span style="float: left">{{ item.display_name }}</span>
+              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.key }}</span>
+            </el-option>
+          </el-select>
           <!-- <el-select
             v-model="listQuery.sort"
             style="width: 140px"
@@ -275,7 +306,6 @@ import {
 } from "@/api/goods"; //暴露 js api
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 import service from "../../utils/request";
-
 //如果在这里 定义了数据,那么在下方只需要 calendarTypeOptions 即可, 而没在这里定义的需要 calendarTypeOptions:[],注明数据类型
 // const calendarTypeOptions = [
 //   { key: "CN", display_name: "China" },
@@ -303,8 +333,10 @@ export default {
         goodsName: undefined,
         goodsColor: undefined,
         goodsType: undefined,
-        releaseDate: undefined
+        releaseDate: undefined,
         // sort: "+id" //排序
+        //测试多选框部分
+        goodsColors:[]
       },
       //手机颜色,直接使用v-for
       importanceOptions: ["blue", "white", "yellow", "black", "red"],
@@ -366,6 +398,8 @@ export default {
       if (this.listQuery.releaseDate) {
         this.listQuery.releaseDate = new Date(this.listQuery.releaseDate);
       }
+      //转为json
+    //   this.listQuery.goodsColors=JSON.stringify(this.listQuery.goodsColors)
       goodsList(this.listQuery).then(response => {
         this.tableData = response.data.data; //表格数据
         this.total = response.data.count; //条数

@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+// import qs from 'qs'
 
 //!!!!!!!!
 //注意 使用参数为data ,后台需要用json接收
@@ -6,10 +7,19 @@ import request from '@/utils/request'
 export function goodsList(query) {
   return request({
     url: '/goods/list',
-    method: 'get',
+    method: 'post',
     params: query
   })
 }
+
+//json 格式 ,因为多选框 后台使用form-data无法接收,注意!!!
+// export function goodsList(query) {
+//   return request({
+//     url: '/goods/list',
+//     method: 'post',
+//     data: query
+//   })
+// }
 
 export function queryConditions() {
   return request({
