@@ -16,9 +16,18 @@ export function getInfo(token) {
   })
 }
 
-export function logout() {
+// export function logout() {
+//   return request({
+//     url: '/user/logout',
+//     method: 'post'
+//   })
+// }
+
+//这里根据需求, 后台redis 存储的token , 传到后台删除 , 注意要加 param: { }
+export function logout(token) {
   return request({
     url: '/user/logout',
-    method: 'post'
+    method: 'post',
+    params: { token }
   })
 }
