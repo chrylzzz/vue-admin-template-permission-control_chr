@@ -542,7 +542,8 @@ export default {
           type: "success",
           duration: 2000
         });
-        this.getList(); //刷新数据表
+        //刷新数据表
+        this.getList();
       });
     }
   }
