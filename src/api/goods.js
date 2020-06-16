@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 //!!!!!!!!
 //注意 使用参数为data ,后台需要用json接收
-//而使用其他参数,后台就是普通的form-data接收
+//而使用其他参数,后台就是普通的form-data接收,但是需要写 params:{ 参数,参数}
 export function goodsList(query) {
   return request({
     url: '/goods/list',
