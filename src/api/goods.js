@@ -4,22 +4,24 @@ import request from '@/utils/request'
 //!!!!!!!!
 //注意 使用参数为data ,后台需要用json接收
 //而使用其他参数,后台就是普通的form-data接收,但是需要写 params:{ 参数,参数}
-export function goodsList(query) {
-  return request({
-    url: '/goods/list',
-    method: 'post',
-    params: query
-  })
-}
 
-//json 格式 ,因为多选框 后台使用form-data无法接收,注意!!!
+//form-data 传递多选择框不成功
 // export function goodsList(query) {
 //   return request({
 //     url: '/goods/list',
 //     method: 'post',
-//     data: query
+//     params: query
 //   })
 // }
+
+//json 格式 ,因为多选框 后台使用form-data无法接收,注意!!!
+export function goodsList(query) {
+  return request({
+    url: '/goods/list',
+    method: 'post',
+    data: query
+  })
+}
 
 export function queryConditions() {
   return request({
