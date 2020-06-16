@@ -39,7 +39,6 @@
             <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
           </el-select>
 
-
           <!-- 查询返回的下拉菜单 :filterable 可搜索 -->
           <el-select
             v-model="listQuery.goodsType"
@@ -336,7 +335,7 @@ export default {
         releaseDate: undefined,
         // sort: "+id" //排序
         //测试多选框部分
-        goodsColors:[]
+        goodsColors: []
       },
       //手机颜色,直接使用v-for
       importanceOptions: ["blue", "white", "yellow", "black", "red"],
@@ -399,7 +398,7 @@ export default {
         this.listQuery.releaseDate = new Date(this.listQuery.releaseDate);
       }
       //转为json
-    //   this.listQuery.goodsColors=JSON.stringify(this.listQuery.goodsColors)
+      //   this.listQuery.goodsColors=JSON.stringify(this.listQuery.goodsColors)
       goodsList(this.listQuery).then(response => {
         this.tableData = response.data.data; //表格数据
         this.total = response.data.count; //条数
