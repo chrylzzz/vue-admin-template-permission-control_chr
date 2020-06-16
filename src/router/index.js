@@ -228,12 +228,22 @@ export const asyncRoutes = [
   {
     path: '/goodstable',
     component: Layout,
+    meta: {
+      title: '表格',
+      icon: 'table',
+    },
     children: [
       {
         path: 'goodstable',
         name: 'GoodsTable',
         component: () => import('@/views/goodstable/index'),
-        meta: { title: 'GoodsTable', icon: 'table' }
+        meta: { title: '综合goodsTable', icon: 'table' }
+      },
+      {
+        path: 'inline-edit-table',
+        name: 'inlineEditTable',
+        component: () => import('@/views/goodstable/inline-edit-table'),
+        meta: { title: '行内编辑table', icon: 'table' }
       },
     ]
   },

@@ -234,7 +234,17 @@
           <!-- 这里暴露 row -->
           <template slot-scope="{row}">
             <el-button type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(row)">删除</el-button>
+            <!-- 点击确认按钮触发的 ,就不用再button里设置@click了-->
+            <el-popconfirm
+              confirmButtonText="好的"
+              cancelButtonText="不用了"
+              icon="el-icon-info"
+              iconColor="red"
+              title="您确定删除吗？"
+              @onConfirm="handleDelete(row)"
+            >
+              <el-button size="mini" type="danger" slot="reference">删除</el-button>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -486,6 +496,7 @@ export default {
       });
     },
     handleDelete(row) {
+      console.log(row);
       deleteGoods(row.goodsId).then(res => {
         // debugger;
         this.$notify({
@@ -496,7 +507,7 @@ export default {
         });
         this.getList(); //刷新数据表
       });
-    },
+    }
   }
 };
 </script>
