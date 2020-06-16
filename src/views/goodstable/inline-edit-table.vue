@@ -35,7 +35,8 @@
             />
           </template>
         </el-table-column>
-        <el-table-column min-width="300px" label="描述">
+        <!--------------------------------------------------------------------------------------------->
+        <el-table-column min-width="300px" label="描述" align="center">
           <template slot-scope="{row}">
             <!-- v-if="row.edit"  这里表示 编辑该行 ,与@click=row.edit  判断是否相等,等于则显示input输入框和button按钮 -->
             <template v-if="row.edit">
@@ -71,6 +72,7 @@
             >编辑</el-button>
           </template>
         </el-table-column>
+        <!--------------------------------------------------------------------------------------------->
       </el-table>
       <pagination
         v-show="total>0"
@@ -137,7 +139,8 @@ export default {
         this.tableData = response.data.data; //表格数据
         this.total = response.data.count; //条数
         const items = this.tableData; // 表格数据,遍历进行edit
-        this.list = items.map(v => {    // ?????????????????????????
+        this.list = items.map(v => {
+          // ?????????????????????????
           this.$set(v, "edit", false); // https://vuejs.org/v2/guide/reactivity.html
           // originalTitle 为 临时的对象的参数,作为编辑之前的内容进行存储
           v.originalTitle = v.goodsDesc; //  will be used when user click the cancel botton
