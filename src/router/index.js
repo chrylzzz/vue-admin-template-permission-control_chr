@@ -253,6 +253,18 @@ export const asyncRoutes = [
       },
     ]
   },
+  {
+    path: '/edit',
+    component: Layout,
+    children: [
+      {
+        path: 'avatar-upload',
+        name: 'Edit',
+        component: () => import('@/views/edit/avatar-upload'),
+        meta: { title: '头像', icon: 'table' }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
