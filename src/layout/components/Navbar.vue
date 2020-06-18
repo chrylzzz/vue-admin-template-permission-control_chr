@@ -7,8 +7,13 @@
     />
 
     <breadcrumb class="breadcrumb-container" />
-    <!-- 边栏, 头像栏 编辑 navbar -->
     <div class="right-menu">
+      <!-- 其他导航栏 -->
+      <template v-if="device!=='mobile'">
+        <!-- 全屏 -->
+        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+      </template>
+      <!-- 边栏, 头像栏 编辑 navbar -->
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
@@ -42,14 +47,16 @@
 import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
+import Screenfull from "@/components/Screenfull";
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    Screenfull
   },
   computed: {
-    ...mapGetters(["sidebar", "avatar"])
+    ...mapGetters(["sidebar", "avatar", "device"])
   },
   methods: {
     toggleSideBar() {
