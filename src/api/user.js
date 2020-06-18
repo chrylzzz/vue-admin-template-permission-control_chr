@@ -31,3 +31,11 @@ export function logout(token) {
     params: { token }
   })
 }
+
+//获取所有的用户名
+export function getAllUserName(){
+  return request({
+    url: '/user/getAllUserName',
+    method: 'get',
+  })
+}

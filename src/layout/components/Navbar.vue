@@ -20,7 +20,7 @@
           <router-link to="/">
             <el-dropdown-item>Home</el-dropdown-item>
           </router-link>
-          <router-link to="/">
+          <router-link to="/edit/avatar-upload">
             <el-dropdown-item>个人信息</el-dropdown-item>
           </router-link>
           <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
