@@ -76,6 +76,55 @@ export const constantRoutes = [
       }
     ]
   },
+  //定时任务管理
+  {
+    path: '/quartz',
+    component: Layout,
+    meta: {
+      title: '定时任务管理',
+      icon: 'table',
+    },
+    children: [
+      {
+        path: 'schedule',
+        name: 'schedule',
+        component: () => import('@/views/quartz/schedule'),
+        meta: { title: '定时任务管理', icon: 'table' }
+      },
+    ]
+  },
+
+  //演示测试表格
+  {
+    path: '/test',
+    component: Layout,
+    meta: {
+      title: '测试农民工表格',
+      icon: 'table',
+    },
+    children: [
+      {
+        path: 'goodstable',
+        name: 'GoodsTable',
+        component: () => import('@/views/test/index'),
+        // meta: { title: '综合goodsTable', icon: 'table' }
+        meta: { title: '交易明细数据', icon: 'table' }
+      },
+      {
+        path: 'inline-edit-table',
+        name: 'inlineEditTable',
+        component: () => import('@/views/test/inline-edit-table'),
+        // meta: { title: '行内编辑table', icon: 'table' }
+        meta: { title: '代发明细数据', icon: 'table' }
+      },
+      // {
+      //   path: 'othstyle',
+      //   name: 'othstyle',
+      //   component: () => import('@/views/goodstable/othstyle'),
+      //   meta: { title: '其他样式table', icon: 'table' }
+      // },
+    ]
+  },
 
   {
     path: '/form',
