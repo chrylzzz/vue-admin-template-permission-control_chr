@@ -93,6 +93,24 @@ export const constantRoutes = [
       },
     ]
   },
+  //系统资源管理---------------折线图暂时没有组件,暂时不展示了
+  // {
+  //   path: '/monitor',
+  //   component: Layout,
+  //   meta: {
+  //     title: '系统内存CPU管理',
+  //     icon: 'table',
+  //   },
+  //   children: [
+  //     {
+  //       path: 'monitor',
+  //       name: 'monitor',
+  //       component: () => import('@/views/monitor/index'),
+  //       meta: { title: '系统内存CPU管理', icon: 'table' }
+  //     },
+  //   ]
+  // },
+
 
   //演示测试表格
   {
